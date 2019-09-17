@@ -9,3 +9,4 @@ var car = {
     }
 }
 console.log(car);
+car.start()
