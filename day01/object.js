@@ -10,3 +10,6 @@ var car = {
 }
 console.log(car);
 car.start()
+
+var carArray = ['car1', 'car2', 'car3', 'car4'];
+console.log(carArray[2]);
