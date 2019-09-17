@@ -30,7 +30,11 @@ app.get("/sendUserData", function(request, response){
     console.log(`userId : ${userId}`);
     console.log(`password : ${password}`);
     response.json(1);
-    
+});
+
+//index page routing
+app.get("/index", function(request, response){
+    response.render('index-page');
 });
 
 app.listen(port);
