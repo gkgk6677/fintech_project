@@ -14,7 +14,7 @@ app.use(express.static(__dirname + '/public'));
 
 //index routing
 app.get("/", function(request, response){
-    response.end("Welcome!");
+    response.render('main');
 });
 
 //routing
