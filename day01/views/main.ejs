@@ -11,15 +11,24 @@
         <h2>안녕하세요</h2>
         <input id="userId" type="text"><br>
         <input id="password" type="password"><br>
-        <button id="loginBtn" type="button" onclick="onClick();">Send Data</button>
+        <button id="loginBtn" type="button">Send Data</button>
     </body>
     <script>
-        // $('#loginBtn').click(function(){
-        //     alert(`userId : ${$('#userId').val()}`);
-        // });
-        function onClick(){
-            var userid = document.getElementById('userId').value;
-            alert(userid);
-        }
+        $('#loginBtn').click(function(){
+            // alert(`userId : ${$('#userId').val()}`);
+            var userId = $('#userId').val();
+            var password = $('#password').val();
+            $.ajax({
+                url:`http://localhost:8080/sendUserData?userId=${userId}&password=${password}`,
+                type: 'GET',
+                success:function(data){
+                    alert('success');
+                }
+            });
+        });
+        // function onClick(){
+        //     var userid = document.getElementById('userId').value;
+        //     alert(userid);
+        // }
     </script>
 </html>

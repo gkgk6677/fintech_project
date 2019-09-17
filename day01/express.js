@@ -23,5 +23,15 @@ app.get("/sayHello", function(request, response){
     response.end("Hello " + user_name + "!");
 });
 
+//sendUserData routing
+app.get("/sendUserData", function(request, response){
+    var userId = request.query.userId;
+    var password = request.query.password;
+    console.log(`userId : ${userId}`);
+    console.log(`password : ${password}`);
+    response.json(1);
+    
+});
+
 app.listen(port);
 console.log("Listening on port ", port);
