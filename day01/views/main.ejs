@@ -1,8 +1,25 @@
 <html>
     <head>
-
+        <script
+            src="https://code.jquery.com/jquery-2.2.4.js"
+            integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
+            crossorigin="anonymous">
+        </script>
     </head>
     <body>
         <h1>Hello Express</h1>
+        <h2>안녕하세요</h2>
+        <input id="userId" type="text"><br>
+        <input id="password" type="password"><br>
+        <button id="loginBtn" type="button" onclick="onClick();">Send Data</button>
     </body>
+    <script>
+        // $('#loginBtn').click(function(){
+        //     alert(`userId : ${$('#userId').val()}`);
+        // });
+        function onClick(){
+            var userid = document.getElementById('userId').value;
+            alert(userid);
+        }
+    </script>
 </html>
