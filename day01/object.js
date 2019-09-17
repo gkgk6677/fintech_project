@@ -1,4 +1,4 @@
-var car = {
+var car1 = {
     name : "sonata",
     ph : "500ph",
     start : function(){
@@ -8,8 +8,18 @@ var car = {
         console.log("engine is stopped");
     }
 }
-console.log(car);
-car.start()
+var car2 = {
+    name : "제네시스",
+    ph : "500ph",
+    start : function(){
+        console.log("engine is starting");
+    },
+    stop : function(){
+        console.log("engine is stopped");
+    }
+}
+console.log(car1);
+car1.start()
 
-var carArray = ['car1', 'car2', 'car3', 'car4'];
-console.log(carArray[2]);
+var carArray = [car1, car2];
+console.log(carArray[1].name);
