@@ -37,5 +37,15 @@ app.get("/index", function(request, response){
     response.render('index-page');
 });
 
+//signin page routing
+app.get("/signin", function(request, response){
+    response.render('signin');
+})
+
+//signup page routing
+app.get("/signup", function(request, response){
+    response.render('signup');
+})
+
 app.listen(port);
 console.log("Listening on port ", port);
