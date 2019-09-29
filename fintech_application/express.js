@@ -85,18 +85,19 @@ app.get("/index", function(request, response){
 //signin page routing
 app.get("/signin", function(request, response){
     response.render('signin');
-})
+});
 
 app.get('/qrcode', function(req, res){
     res.render('qrcode');
-})
+});
 
 app.get('/qr', function(req, res){
     res.render('qrcodeReader');
+});
 
 app.get('/balance', function(req,res){
     res.render('balance');
-})
+});
 
 app.post('/balance',auth, function(req, res){
     var finusenum = req.body.finNum;
@@ -124,7 +125,7 @@ app.post('/balance',auth, function(req, res){
             }
         });
     })
-})
+});
 
 app.post("/signin", function(request, response){
     var userId = request.body.userId;
@@ -161,12 +162,12 @@ app.post("/signin", function(request, response){
             }
         }
     })
-})
+});
 
 //signup page routing
 app.get("/signup", function(request, response){
     response.render('signup');
-})
+});
 
 app.post("/signup", function(req, res){
     var email = req.body.email;
@@ -226,7 +227,7 @@ app.post('/getUser', auth, function(req, res){
             });
         }
     })
-})
+});
 
 app.post('/withdrawQR', auth, function(req, res){
     console.log(req.decoded);
@@ -272,7 +273,7 @@ app.post('/withdrawQR', auth, function(req, res){
             });
         }
     })
-})
+});
 
 app.post('/transactionList',auth, function(req, res){
     var finusenum = req.body.finNum;
@@ -305,7 +306,8 @@ app.post('/transactionList',auth, function(req, res){
                 res.json(resultObj);
             }
         });
-    })
-})
+    });
+});
+
 app.listen(port);
 console.log("Listening on port ", port);
