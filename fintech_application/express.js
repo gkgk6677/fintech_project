@@ -94,6 +94,38 @@ app.get('/qrcode', function(req, res){
 app.get('/qr', function(req, res){
     res.render('qrcodeReader');
 
+app.get('/balance', function(req,res){
+    res.render('balance');
+})
+
+app.post('/balance',auth, function(req, res){
+    var finusenum = req.body.finNum;
+    var selectUserSql = "SELECT * FROM fintech.usertbl WHERE user_id = ?";
+    connection.query(selectUserSql,[req.decoded.userId], function(err, result){
+        var accessToken = result[0].accessToken;
+        var qs = "?fintech_use_num="+finusenum+"&tran_dtime=20190919105400"
+        option = {
+            url : "https://testapi.open-platform.or.kr/v1.0/account/balance"+qs,
+            method : "GET",
+            headers : {
+                "Authorization" : "Bearer " + accessToken
+            },
+        }
+        request(option, function (error, response, body) {
+            console.log(body);
+            if(error){
+                console.error(error);
+                throw error;
+            }
+            else {
+                console.log(body);
+                var resultObj = JSON.parse(body);
+                res.json(resultObj);
+            }
+        });
+    })
+})
+
 app.post("/signin", function(request, response){
     var userId = request.body.userId;
     var password = request.body.password;
