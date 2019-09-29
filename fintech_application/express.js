@@ -235,5 +235,38 @@ app.post('/withdrawQR', auth, function(req, res){
     })
 })
 
+app.post('/transactionList',auth, function(req, res){
+    var finusenum = req.body.finNum;
+    var selectUserSql = "SELECT * FROM fintech.usertbl WHERE user_id = ?";
+    connection.query(selectUserSql,[req.decoded.userId], function(err, result){
+        var accessToken = result[0].accessToken;
+        var qs = "?fintech_use_num="+finusenum+
+        "&inquiry_type=A" +
+        "&from_date=20161001" +
+        "&to_date=20161001" +
+        "&sort_order=D" +
+        "&page_index=1" +
+        "&tran_dtime=20190919105400" 
+        option = {
+            url : "https://testapi.open-platform.or.kr/v1.0/account/transaction_list"+qs,
+            method : "GET",
+            headers : {
+                "Authorization" : "Bearer " + accessToken
+            },
+        }
+        request(option, function (error, response, body) {
+            console.log(body);
+            if(error){
+                console.error(error);
+                throw error;
+            }
+            else {
+                console.log(body);
+                var resultObj = JSON.parse(body);
+                res.json(resultObj);
+            }
+        });
+    })
+})
 app.listen(port);
 console.log("Listening on port ", port);
