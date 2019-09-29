@@ -87,6 +87,13 @@ app.get("/signin", function(request, response){
     response.render('signin');
 })
 
+app.get('/qrcode', function(req, res){
+    res.render('qrcode');
+})
+
+app.get('/qr', function(req, res){
+    res.render('qrcodeReader');
+
 app.post("/signin", function(request, response){
     var userId = request.body.userId;
     var password = request.body.password;
