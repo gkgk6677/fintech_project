@@ -50,16 +50,16 @@
                             <i class="input-icon fa fa-user font-11"></i>
                             <span>Username</span>
                             <em>(required)</em>
-                            <input type="name" placeholder="아이디">
+                            <input type="name" id="userId" placeholder="아이디">
                         </div> 
                         <div class="input-style has-icon input-style-1 input-required">
                             <i class="input-icon fa fa-lock font-11"></i>
                             <span>Password</span>
                             <em>(required)</em>
-                            <input type="password" placeholder="비밀번호">
+                            <input type="password" id="password" placeholder="비밀번호">
                         </div>          
                         <div class="clear"></div>
-                        <a href="#" class="button button-full button-m shadow-large button-round-small bg-green1-dark top-30 bottom-0">로그인</a>
+                        <a href="#" id="loginBtn" class="button button-full button-m shadow-large button-round-small bg-green1-dark top-30 bottom-0">로그인</a>
                     </div>
                 </div>
 
@@ -197,4 +197,21 @@
 <script type="text/javascript" src="scripts/jquery.js"></script>
 <script type="text/javascript" src="scripts/plugins.js"></script>
 <script type="text/javascript" src="scripts/custom.js"></script>
+<script>
+    $("#loginBtn").click(function(){
+            $.ajax({
+                url:'http://localhost:3000/signin',
+                type : 'POST',
+                data : {
+                    userId : $("#userId").val(),
+                    password : $("#password").val(),
+                },
+                success:function(data){
+                    console.log(data);
+                    sessionStorage.setItem('jwtToken', data);
+                    window.location.href = "/main";
+                }
+            })
+        });
+</script>
 </body>
