@@ -11,7 +11,7 @@
             </div>
         </div>
         <div class="content-boxed content-boxed-full">
-            <div class="content bottom-0">
+            <div id="card_list" class="content bottom-0">
                 <div class="link-list link-list-2">
                     <a href="component-ad-boxes.html">
                         <i class="fa fa-dollar-sign bg-green1-dark round-tiny"></i>
@@ -173,4 +173,41 @@
 <script type="text/javascript" src="scripts/jquery.js"></script>
 <script type="text/javascript" src="scripts/plugins.js"></script>
 <script type="text/javascript" src="scripts/custom.js"></script>
+<script>
+    var jwtToken = sessionStorage.getItem('jwtToken');
+    $.ajax({
+        url:'http://localhost:3000/getUser',
+        type : 'POST',
+        headers : {
+            'x-access-token' : jwtToken
+        },
+        data : {
+        },
+        success:function(data){
+            console.log(data);
+            console.log("aaaaaaaaaaaaaaaaaa");
+            var resultList = data.res_list;
+            for(var i = 0; i < resultList.length; i++){
+                var resultElement = resultList[i];
+                $("#cardList").append(
+                    '    <div data-height="150" style="height : 150px" class="caption caption-margins round-medium shadow-large">\n' +
+    '        <div class="caption-center right-15 top-15 text-right">\n' +
+    '            <a href="/balance?fin_use_num='+resultElement.fintech_use_num+'" class="back-button button button-xs button-round-huge bg-highlight">잔액조회</a>\n' +
+    '            <a href="/qrcode?fin_use_num='+resultElement.fintech_use_num+'" class="back-button button button-xs button-round-huge bg-highlight">결제</a>\n' +
+    '        </div>\n' +
+    '        <div class="caption-center left-15 text-left">\n' +
+    '            <h1 class="color-white bolder">'+resultElement.account_alias+'</h1>\n' +
+    '            <p class="under-heading color-white opacity-90 bottom-0">\n' +
+    '                ' + resultElement.fintech_use_num +
+    '            </p>\n' +
+    '        </div>\n' +
+    '        <div class="caption-overlay bg-black opacity-70"></div>\n' +
+    '        <div class="caption-bg bg-18"></div>\n' +
+    '    </div>\n'
+
+                )
+            }
+        }
+    })
+</script>
 </body>

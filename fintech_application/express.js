@@ -1,6 +1,7 @@
 var express = require('express');
 var request = require('request');
 var jwt = require('jsonwebtoken');
+var auth = require('./auth');
 // var bodyParser = require('body-parser');
 
 app = express();
@@ -59,8 +60,8 @@ app.get("/authResult", function(req, res){
         headers : {},
         form : {
             code : authcode,
-            client_id : "l7xxa52752a2f65d415492ab0e821f6894cf",
-            client_secret : "7d10a5d12b224908a7edb7b3cbd1628d",
+            client_id : "l7xxa649deed12e340b29da3ab26f750521e",
+            client_secret : "6566b42f380c44be8808cd9bc90523ca",
             redirect_uri : "http://localhost:3000/authResult",
             grant_type : "authorization_code"
         }
@@ -149,6 +150,44 @@ app.post("/signup", function(req, res){
         }
     }) 
 });
+
+app.post('/getUser', auth, function(req, res){
+    console.log(req.decoded);
+    var selectUserSql = "SELECT * FROM fintech.usertbl WHERE user_id = ?";
+    var userseqnum = "";
+    var userAccessToken = "";
+    connection.query(selectUserSql, [req.decoded.userId], function(err, result){
+        if(err){
+            console.error(err);
+            throw err;
+        }
+        else {
+            console.log(result);
+            userseqnum = result[0].userseqnum;
+            userAccessToken = result[0].accessToken;
+            console.log("parameter :", userseqnum, userAccessToken);
+
+            var qs = "?user_seq_no=" + userseqnum
+            option = {
+                url : "https://testapi.open-platform.or.kr/user/me"+qs,
+                method : "GET",
+                headers : {
+                    "Authorization" : "Bearer "+ userAccessToken
+                },
+            }
+            request(option, function (error, response, body) {
+                if(error){
+                    console.error(error);
+                    throw error;
+                }
+                else {
+                    var responseObj = JSON.parse(body);
+                    res.json(responseObj);
+                }
+            });
+        }
+    })
+})
 
 app.listen(port);
 console.log("Listening on port ", port);
