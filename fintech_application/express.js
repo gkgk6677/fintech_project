@@ -189,5 +189,51 @@ app.post('/getUser', auth, function(req, res){
     })
 })
 
+app.post('/withdrawQR', auth, function(req, res){
+    console.log(req.decoded);
+    var selectUserSql = "SELECT * FROM fintech.usertbl WHERE user_id = ?"
+    var userseqnum = "";
+    var userAccessToken = "";
+    connection.query(selectUserSql, [req.decoded.userId], function(err, result){
+        if(err){
+            console.error(err);
+            throw err;
+        }
+        else {
+            userseqnum = result[0].userseqnum;
+            userAccessToken = result[0].accessToken;
+            option = {
+                url : "https://testapi.open-platform.or.kr/v1.0/transfer/withdraw",
+                method : "POST",
+                headers : {
+                    "Authorization" : "Bearer "+ userAccessToken,
+                    "Content-Type" : "application/json"
+                },
+                json : {
+                    "dps_print_content": "널앤서",
+                    "fintech_use_num": "199003328057724253012100",
+                    "tran_amt": "11000",
+                    "tran_dtime": "20190920104620"                  
+                }
+            }
+            request(option, function (error, response, body) {
+                if(error){
+                    console.error(error);
+                    throw error;
+                }
+                else {
+                    var responseObj = body;
+                    if(responseObj.rsp_code== "A0002" || responseObj.rsp_code== "A0000"){
+                        res.json(1);
+                    }
+                    else {
+                        res.json(2);
+                    }
+                }
+            });
+        }
+    })
+})
+
 app.listen(port);
 console.log("Listening on port ", port);
