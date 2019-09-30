@@ -4,6 +4,10 @@ var jwt = require('jsonwebtoken');
 var auth = require('./auth');
 // var bodyParser = require('body-parser');
 
+var morgan = require('morgan')
+
+app.use(morgan('dev'))
+
 app = express();
 
 // app.use(bodyParser.json());
